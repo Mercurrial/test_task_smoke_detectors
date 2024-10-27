@@ -2,52 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'example_data.dart';
+import 'detector.dart';
 
-class Detector {
-  final int sensorId;
-  final String name;
-  final int status;
-  final int temperature;
-  final int humidity;
-
-  const Detector({
-    required this.sensorId,
-    required this.name,
-    required this.status,
-    required this.temperature,
-    required this.humidity,
-  });
-
-  factory Detector.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-      'sensor_id': int sensorId,
-      'name': String name,
-      'status': int status,
-      'temperature': int temperature,
-      'humidity': int humidity,
-      } =>
-          Detector(
-            sensorId: sensorId,
-            name: name,
-            status: status,
-            temperature: temperature,
-            humidity: humidity,
-          ),
-      _ => throw const FormatException('Failed to load.'),
-    };
-  }
-}
-
-Future<Detector> fetchDetector() async {
+/*Future<Detector> fetchDetector() async {
   final response = await http
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+      .get(Uri.parse(''));
   if (response.statusCode == 200) {
     return Detector.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   } else {
     throw Exception('Failed to load');
   }
+}*/
+
+List<Detector> decode() {
+  final json = jsonDecode(jsonString) as List<dynamic>;
+  final detectors = json.map((dynamic e) => Detector.fromJson(e as Map<String, dynamic>)).toList();
+  return detectors;
 }
 
 void main() {
@@ -56,6 +27,8 @@ void main() {
   );
 }
 
+const double textSize = 28;
+
 class Home extends StatelessWidget {
   Home({super.key});
 
@@ -63,8 +36,16 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(context) {
-    futureDetector = fetchDetector();
+    List<Detector> detectors = decode();
+
+    for(Detector e in detectors){
+      if(e.name == "" || e.name == "N/A") {
+        e.name = "Датчик";
+      }
+    }
+
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: const Text('Мои датчики'),
         titleTextStyle: const TextStyle(
@@ -72,21 +53,29 @@ class Home extends StatelessWidget {
           fontSize: 32,
           fontWeight: FontWeight.bold,
         ),
-        backgroundColor: const Color.fromRGBO(255,188,108, 1.0),
+        backgroundColor: const Color.fromRGBO(255, 188, 108, 1.0),
       ),
-      body: Center(
-        child: FutureBuilder<Detector>(
-          future: futureDetector,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Text(snapshot.data!.name);
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-
-            return const CircularProgressIndicator();
-          },
-        ),
+      body: ListView.builder(
+          padding: const EdgeInsets.all(10),
+          itemCount: detectors.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.black54,
+                  border: Border.all(width: 5, color: Color.fromRGBO(255, 188, 108, 1.0)),
+                ),
+                padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(detectors[index].name, style: const TextStyle(fontSize: textSize, color: Colors.white)),
+                    Text("${detectors[index].status}", style: const TextStyle(fontSize: textSize, color: Colors.white)),
+                  ],
+                ),
+            );
+          }
       ),
     );
   }
