@@ -1,6 +1,7 @@
 class Detector {
   dynamic sensorId;
   dynamic name;
+  dynamic newName;
   dynamic status;
   dynamic temperature;
   dynamic humidity;
@@ -13,6 +14,7 @@ class Detector {
     required this.humidity,*/
      this.sensorId,
      this.name,
+     this.newName,
      this.status,
      this.temperature,
      this.humidity,

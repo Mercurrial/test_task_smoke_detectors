@@ -5,6 +5,7 @@ import 'example_data.dart';
 import 'detector.dart';
 import 'dialog_full_information.dart';
 
+// Функция получение файла с сервера
 /*Future<Detector> fetchDetector() async {
   final response = await http
       .get(Uri.parse(''));
@@ -15,6 +16,7 @@ import 'dialog_full_information.dart';
   }
 }*/
 
+// Функция декодирования JSON файла
 List<Detector> decode() {
   final json = jsonDecode(jsonString) as List<dynamic>;
   final detectors = json
@@ -28,8 +30,6 @@ void main() {
     MaterialApp(home: Home()),
   );
 }
-
-const double textSize = 28;
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -107,10 +107,11 @@ class Home extends StatelessWidget {
                 imageTmp = const AssetImage('assets/images/warning.png');
                 colorTmp = Colors.yellowAccent;
               default:
-                text = 'N\A';
-                imageTmp = const AssetImage('assets/images/allert.png');
+                text = 'N/A';
+                imageTmp = const AssetImage('assets/images/alert.png');
                 colorTmp = Colors.grey;
             }
+
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
@@ -121,51 +122,55 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
               margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(detectors[index].name,
-                            style: const TextStyle(
-                                fontSize: textSize, color: Colors.white)),
-                        TextButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context){
-                                  return DialogFullInformation(
-                                    detector: detectors[index],
-                                    imageTmp: imageTmp,
-                                    colorTmp: colorTmp,
-                                    textTmp: text,
-                                  );
-                                }
-                            );
-                          },
-                          child: const Text('Подробная\nинформцаия',
-                              style: TextStyle(fontSize: 18, color: Colors.grey), textAlign: TextAlign.center,),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image(
-                          image: imageTmp,
-                          width: 50,
-                          height: 50,
+                  Column(
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const SizedBox(width: 150),
+                      //SizedBox(width: 175, child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.green, width: 5))),),
+                      Text(detectors[index].name,
+                          style: const TextStyle(
+                              fontSize: 28,
+                              color: Colors.white
+                          ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return DialogFullInformation(
+                                  detector: detectors[index],
+                                  imageTmp: imageTmp,
+                                  colorTmp: colorTmp,
+                                  textTmp: text,
+                                );
+                              });
+                        },
+                        child: const Text(
+                          'Подробная\nинформация',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          textAlign: TextAlign.center,
                         ),
-                        Text(text,
-                            style: TextStyle(color: colorTmp, fontSize: 18),
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(width: 150),
+                      //SizedBox(width: 175, child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.green, width: 5))),),
+                      Image(
+                        image: imageTmp,
+                        width: 50,
+                        height: 50,
+                      ),
+                      Text(text,
+                          style: TextStyle(color: colorTmp, fontSize: 18),
+                          textAlign: TextAlign.center),
+                    ],
                   ),
                 ],
               ),
