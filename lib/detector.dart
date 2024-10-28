@@ -7,11 +7,6 @@ class Detector {
   dynamic humidity;
 
   Detector({
-    /*required this.sensorId,
-    required this.name,
-    required this.status,
-    required this.temperature,
-    required this.humidity,*/
      this.sensorId,
      this.name,
      this.newName,

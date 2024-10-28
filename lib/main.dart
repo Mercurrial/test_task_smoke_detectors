@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'example_data.dart';
-import 'detector.dart';
+import 'detector.dart'; // Class detector
+// Всплывающее окно подробной информацции про датчик
 import 'dialog_full_information.dart';
+// Метод декодирования статуса
+import 'decode_status.dart';
 
 // Функция получение файла с сервера
 /*Future<Detector> fetchDetector() async {
@@ -27,17 +30,19 @@ List<Detector> decode() {
 
 void main() {
   runApp(
-    MaterialApp(home: Home()),
+    const MaterialApp(home: Home()),
   );
 }
 
+// Создание основного экрана
 class Home extends StatelessWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   Widget build(context) {
-    List<Detector> detectors = decode();
+    List<Detector> detectors = decode(); // Получение списка всех датчиков
 
+    // Заполнение пустых полей датчика
     for (Detector e in detectors) {
       if (e.name == "" || e.name == "N/A") {
         e.name = "Датчик";
@@ -61,56 +66,12 @@ class Home extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           itemCount: detectors.length,
           itemBuilder: (BuildContext context, int index) {
-            String text;
-            AssetImage imageTmp;
-            Color colorTmp;
-
-            switch (detectors[index].status) {
-              case (0):
-                text = 'Неизвестно';
-                imageTmp = const AssetImage('assets/images/alert.png');
-                colorTmp = Colors.grey;
-              case (1):
-                text = 'Готов';
-                imageTmp = const AssetImage('assets/images/accept.png');
-                colorTmp = Colors.green;
-              case (2):
-                text = 'Тревога';
-                imageTmp = const AssetImage('assets/images/exclamation.png');
-                colorTmp = Colors.red;
-              case (3):
-                text = 'Пожар';
-                imageTmp = const AssetImage('assets/images/exclamation.png');
-                colorTmp = Colors.red;
-              case (4):
-                text = 'Корпус открыт';
-                imageTmp = const AssetImage('assets/images/warning.png');
-                colorTmp = Colors.yellowAccent;
-              case (5):
-                text = 'Корпус закрыт';
-                imageTmp = const AssetImage('assets/images/accept.png');
-                colorTmp = Colors.green;
-              case (6):
-                text = 'Потерян';
-                imageTmp = const AssetImage('assets/images/alert.png');
-                colorTmp = Colors.grey;
-              case (7):
-                text = 'Низкий заряд\nбатареи';
-                imageTmp = const AssetImage('assets/images/warning.png');
-                colorTmp = Colors.yellowAccent;
-              case (8):
-                text = 'Событие по\nтемпературе';
-                imageTmp = const AssetImage('assets/images/warning.png');
-                colorTmp = Colors.yellowAccent;
-              case (9):
-                text = 'Событие по\nвлажности';
-                imageTmp = const AssetImage('assets/images/warning.png');
-                colorTmp = Colors.yellowAccent;
-              default:
-                text = 'N/A';
-                imageTmp = const AssetImage('assets/images/alert.png');
-                colorTmp = Colors.grey;
-            }
+            // Декодирование статуса датчика
+            List<dynamic> listDecodeStatus =
+                decodeStatus(detectors[index].status);
+            String text = listDecodeStatus[0];
+            AssetImage imageTmp = listDecodeStatus[1];
+            Color colorTmp = listDecodeStatus[2];
 
             return Container(
               decoration: BoxDecoration(
@@ -126,16 +87,15 @@ class Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Column(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       const SizedBox(width: 150),
-                      //SizedBox(width: 175, child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.green, width: 5))),),
-                      Text(detectors[index].name,
-                          style: const TextStyle(
-                              fontSize: 28,
-                              color: Colors.white
-                          ),
+                      Text(
+                        detectors[index].name,
+                        style:
+                            const TextStyle(fontSize: 28, color: Colors.white),
                       ),
+                      // Кнопка активации всплавающего окна диалога
+                      // с полной информацией о датчике
                       TextButton(
                         onPressed: () {
                           showDialog(
@@ -161,7 +121,6 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(width: 150),
-                      //SizedBox(width: 175, child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.green, width: 5))),),
                       Image(
                         image: imageTmp,
                         width: 50,
@@ -179,20 +138,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
-/*child: Container(
-decoration: const BoxDecoration(
-gradient: LinearGradient(
-begin: Alignment.topCenter,
-end: Alignment.bottomCenter,
-stops: [
-0.0,
-0.5,
-],
-colors: [
-Color.fromRGBO(255,188,108, 1.0),
-Colors.black87,
-],
-),
-),
-),*/

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'detector.dart';
 
 class DialogEditName extends StatelessWidget {
-  String name;
+  late final String name;
   final control = TextEditingController();
 
   DialogEditName({super.key, required this.name});
@@ -32,15 +31,6 @@ class DialogEditName extends StatelessWidget {
               name = control.text;
               Navigator.of(context).pop();
             }),
-        /*TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Image(
-              image: AssetImage('assets/images/accept.png'),
-              width: 30,
-              height: 30,
-            ))*/
       ]),
     );
   }

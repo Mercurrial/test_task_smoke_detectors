@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detector.dart';
-import 'dialog_edit_name.dart';
+
+//import 'dialog_edit_name.dart';
 
 class DialogFullInformation extends StatelessWidget {
   final Detector detector;
@@ -24,7 +25,6 @@ class DialogFullInformation extends StatelessWidget {
           side: const BorderSide(
               width: 3, color: Color.fromRGBO(255, 188, 108, 1.0))),
       child: Column(
-        //crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 15),
@@ -35,7 +35,8 @@ class DialogFullInformation extends StatelessWidget {
                 detector.name,
                 style: const TextStyle(fontSize: 40, color: Colors.white),
               ),
-              TextButton(
+              // Виджет перехода на окно редактирования имени
+              /*TextButton(
                   onPressed: () {
                     //Navigator.of(context).pop();
                     showDialog(
@@ -50,7 +51,7 @@ class DialogFullInformation extends StatelessWidget {
                     image: AssetImage('assets/images/edit.png'),
                     width: 25,
                     height: 25,
-                  ))
+                  ))*/
             ],
           ),
           const SizedBox(height: 15),
@@ -104,14 +105,14 @@ class DialogFullInformation extends StatelessWidget {
           const SizedBox(height: 10),
           FilledButton(
             style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.black45),
+              backgroundColor: WidgetStatePropertyAll<Color>(Colors.black45),
             ),
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: const Text(
               'OK',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
               ),
