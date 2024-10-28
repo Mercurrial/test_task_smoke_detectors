@@ -33,10 +33,10 @@
 Как запустить приложение:
 
 1. Создайте новый Flutter проект.
-2. Добавте в папку lib все файлы .dart (main.dart необходимо заменить на новый)
+2. Добавте в папку lib все файлы [.dart (main.dart необходимо заменить на новый)](https://github.com/Mercurrial/test_task_smoke_detectors/tree/main/lib)
 3. Создайте папку assets в корне проекта.
-4. Скачать папку images и положить в созданную папку assets.
-5. Заменить pubspec.yaml на новый.
+4. Скачать папку [images](https://github.com/Mercurrial/test_task_smoke_detectors/tree/main/assets) и положить в созданную папку assets.
+5. Заменить pubspec.yaml на [новый](https://github.com/Mercurrial/test_task_smoke_detectors/blob/main/pubspec.yaml).
 6. Запустите приложение.
 
 ## Инструкция по использованию
