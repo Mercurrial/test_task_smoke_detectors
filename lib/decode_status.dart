@@ -1,54 +1,82 @@
 import 'package:flutter/material.dart';
 
-List<dynamic> decodeStatus(int i){
-  final resultList = <dynamic>['', const AssetImage('assets/images/alert.png')];
-  resultList.add(Colors.grey);
-  switch (i) {
-    case (0):
-      resultList[0] = 'Неизвестно';
-      resultList[1] = const AssetImage('assets/images/alert.png');
-      resultList[2] = Colors.grey;
-    case (1):
-      resultList[0] = 'Готов';
-      resultList[1] = const AssetImage('assets/images/accept.png');
-      resultList[2] = Colors.green;
-    case (2):
-      resultList[0] = 'Тревога';
-      resultList[1] = const AssetImage('assets/images/exclamation.png');
-      resultList[2] = Colors.red;
-    case (3):
-      resultList[0] = 'Пожар';
-      resultList[1] = const AssetImage('assets/images/exclamation.png');
-      resultList[2] = Colors.red;
-    case (4):
-      resultList[0] = 'Корпус открыт';
-      resultList[1] = const AssetImage('assets/images/warning.png');
-      resultList[2] = Colors.yellowAccent;
-    case (5):
-      resultList[0] = 'Корпус закрыт';
-      resultList[1] = const AssetImage('assets/images/accept.png');
-      resultList[2] = Colors.green;
-    case (6):
-      resultList[0] = 'Потерян';
-      resultList[1] = const AssetImage('assets/images/alert.png');
-      resultList[2] = Colors.grey;
-    case (7):
-      resultList[0] = 'Низкий заряд\nбатареи';
-      resultList[1] = const AssetImage('assets/images/warning.png');
-      resultList[2] = Colors.yellowAccent;
-    case (8):
-      resultList[0] = 'Событие по\nтемпературе';
-      resultList[1] = const AssetImage('assets/images/warning.png');
-      resultList[2] = Colors.yellowAccent;
-    case (9):
-      resultList[0] = 'Событие по\nвлажности';
-      resultList[1] = const AssetImage('assets/images/warning.png');
-      resultList[2] = Colors.yellowAccent;
+String decodeStatusText(int i){
+  switch(i){
+    case(0):
+      return 'Неизвестно';
+    case(1):
+      return 'Готов';
+    case(2):
+      return 'Тревога';
+    case(3):
+      return 'Пожар';
+    case(4):
+      return 'Корпус открыт';
+    case(5):
+      return 'Корпус закрыт';
+    case(6):
+      return 'Потерян';
+    case(7):
+      return 'Низкий заряд\nбатареи';
+    case(8):
+      return 'Событие по\nтемпературе';
+    case(9):
+      return 'Событие по\nвлажности';
     default:
-      resultList[0] = 'N/A';
-      resultList[1] = const AssetImage('assets/images/alert.png');
-      resultList[2] = Colors.grey;
+      return 'N/A';
   }
+}
 
-  return resultList;
+AssetImage decodeStatusImage(int i){
+  switch(i){
+    case(0):
+      return const AssetImage('assets/images/alert.png');
+    case(1):
+      return const AssetImage('assets/images/accept.png');
+    case(2):
+      return const AssetImage('assets/images/exclamation.png');
+    case(3):
+      return const AssetImage('assets/images/exclamation.png');
+    case(4):
+      return const AssetImage('assets/images/warning.png');
+    case(5):
+      return const AssetImage('assets/images/accept.png');
+    case(6):
+      return const AssetImage('assets/images/alert.png');
+    case(7):
+      return const AssetImage('assets/images/warning.png');
+    case(8):
+      return const AssetImage('assets/images/warning.png');
+    case(9):
+      return const AssetImage('assets/images/warning.png');
+    default:
+      return const AssetImage('assets/images/alert.png');
+  }
+}
+
+Color decodeStatusColor(int i){
+  switch(i){
+    case(0):
+      return Colors.grey;
+    case(1):
+      return Colors.green;
+    case(2):
+      return Colors.red;
+    case(3):
+      return Colors.red;
+    case(4):
+      return Colors.yellowAccent;
+    case(5):
+      return Colors.green;
+    case(6):
+      return Colors.grey;
+    case(7):
+      return Colors.yellowAccent;
+    case(8):
+      return Colors.yellowAccent;
+    case(9):
+      return Colors.yellowAccent;
+    default:
+      return Colors.grey;
+  }
 }

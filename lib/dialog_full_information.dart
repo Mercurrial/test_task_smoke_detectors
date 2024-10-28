@@ -32,8 +32,12 @@ class DialogFullInformation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
+                'ID: ${detector.status} ',
+                style: const TextStyle(fontSize: 35, color: Colors.white),
+              ),
+              Text(
                 detector.name,
-                style: const TextStyle(fontSize: 40, color: Colors.white),
+                style: const TextStyle(fontSize: 35, color: Colors.white),
               ),
               // Виджет перехода на окно редактирования имени
               /*TextButton(

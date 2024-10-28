@@ -28,11 +28,22 @@ List<Detector> decode() {
   return detectors;
 }
 
+
 void main() {
-  runApp(
-    const MaterialApp(home: Home()),
-  );
+  runApp(const MyApp());
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Home(),
+    );
+  }
+}
+
 
 // Создание основного экрана
 class Home extends StatelessWidget {
@@ -54,7 +65,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: const Text('Мои датчики'),
+        title: const Text('Список датчиков'),
         titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 32,
@@ -67,11 +78,9 @@ class Home extends StatelessWidget {
           itemCount: detectors.length,
           itemBuilder: (BuildContext context, int index) {
             // Декодирование статуса датчика
-            List<dynamic> listDecodeStatus =
-                decodeStatus(detectors[index].status);
-            String text = listDecodeStatus[0];
-            AssetImage imageTmp = listDecodeStatus[1];
-            Color colorTmp = listDecodeStatus[2];
+            String text = decodeStatusText(detectors[index].status);
+            AssetImage imageTmp = decodeStatusImage(detectors[index].status);
+            Color colorTmp = decodeStatusColor(detectors[index].status);
 
             return Container(
               decoration: BoxDecoration(
@@ -94,7 +103,7 @@ class Home extends StatelessWidget {
                         style:
                             const TextStyle(fontSize: 28, color: Colors.white),
                       ),
-                      // Кнопка активации всплавающего окна диалога
+                      // Кнопка активации всплывающего окна диалога
                       // с полной информацией о датчике
                       TextButton(
                         onPressed: () {
